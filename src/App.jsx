@@ -3,6 +3,8 @@ import { MACOS_FONTS } from './utils/const'
 
 import './App.css'
 
+const { Option } = Select;
+
 function App() {
   return (
     <>
@@ -13,13 +15,12 @@ function App() {
           onChange={(value) => {
             document.body.style = `font-family: ${value || ''}`
           }}
-          options={MACOS_FONTS.map((font) => ({
-            value: font,
-            label: font,
-          }))}
           allowClear
-
-        />
+        >
+          {MACOS_FONTS.map((font) => (
+            <Option key={font} style={{ fontFamily: font }}>{font}</Option>
+          ))}
+        </Select>
         {/* <select onChange={(e) => {
           console.log(e.target.value)
           const font = e.target.value
