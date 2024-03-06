@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Radio, Select, message } from 'antd';
 import { MACOS_FONTS, WINDOWS_FONTS } from './utils/const'
 
@@ -12,15 +12,21 @@ const PLATFORM_DICT = {
 }
 
 function App() {
+  const [currentFont, setCurrentFont] = useState('')
   const [platform, setPlatform] = useState(PLATFORM_DICT.MACOS);
 
   const handlePlatformChange = (e) => {
     setPlatform(e.target.value)
+    setCurrentFont('')
     message.success({
       content: `已切换到 ${e.target.value}`,
       duration: 1,
     })
   }
+
+  useEffect(() => {
+    document.body.style = `font-family: ${currentFont || ''}`
+  }, [currentFont])
 
   return (
     <>
@@ -32,10 +38,11 @@ function App() {
       </div>
       <div>
         <Select
-          style={{ width: `200px` }}
+          style={{ minWidth: `240px` }}
           showSearch
+          value={currentFont}
           onChange={(value) => {
-            document.body.style = `font-family: ${value || ''}`
+            setCurrentFont(value);
           }}
           allowClear
         >
