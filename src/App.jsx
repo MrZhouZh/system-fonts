@@ -1,13 +1,35 @@
-import { Select } from 'antd'
-import { MACOS_FONTS } from './utils/const'
+import { useState } from 'react';
+import { Radio, Select, message } from 'antd';
+import { MACOS_FONTS, WINDOWS_FONTS } from './utils/const'
 
 import './App.css'
 
 const { Option } = Select;
 
+const PLATFORM_DICT = {
+  MACOS: 'MacOS',
+  WINDOWS: 'Windows',
+}
+
 function App() {
+  const [platform, setPlatform] = useState(PLATFORM_DICT.MACOS);
+
+  const handlePlatformChange = (e) => {
+    setPlatform(e.target.value)
+    message.success({
+      content: `已切换到 ${e.target.value}`,
+      duration: 1,
+    })
+  }
+
   return (
     <>
+      <div style={{ marginBottom: '10px' }}>
+        <Radio.Group value={platform} onChange={handlePlatformChange}>
+          <Radio.Button value={PLATFORM_DICT.MACOS}>{PLATFORM_DICT.MACOS}</Radio.Button>
+          <Radio.Button value={PLATFORM_DICT.WINDOWS}>{PLATFORM_DICT.WINDOWS}</Radio.Button>
+        </Radio.Group>
+      </div>
       <div>
         <Select
           style={{ width: `200px` }}
@@ -17,19 +39,10 @@ function App() {
           }}
           allowClear
         >
-          {MACOS_FONTS.map((font) => (
+          {(platform === PLATFORM_DICT.MACOS ? MACOS_FONTS : WINDOWS_FONTS).map((font) => (
             <Option key={font} style={{ fontFamily: font }}>{font}</Option>
           ))}
         </Select>
-        {/* <select onChange={(e) => {
-          console.log(e.target.value)
-          const font = e.target.value
-          document.body.style = `font-family: ${font}`
-        }}>
-          {MACOS_FONTS.map((font) => (
-            <option key={font} value={font}>{font}</option>
-          ))}
-        </select> */}
       </div>
       <div className="card">
         <p>
