@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Radio, Select, message } from 'antd';
+import { Affix, Alert, Radio, Select, message } from 'antd';
 import { MACOS_FONTS, WINDOWS_FONTS } from './utils/const'
+import getSystem from './utils/getSystem';
 
 import './App.css'
 
@@ -15,6 +16,12 @@ function App() {
   const [currentFont, setCurrentFont] = useState('')
   const [platform, setPlatform] = useState(PLATFORM_DICT.MACOS);
 
+  const currentSystem = getSystem().isMacOS
+    ? PLATFORM_DICT.MACOS
+    : getSystem().isWindows
+      ? PLATFORM_DICT.WINDOWS
+      : 'Unknown'
+
   const handlePlatformChange = (e) => {
     setPlatform(e.target.value)
     setCurrentFont('')
@@ -24,12 +31,23 @@ function App() {
     })
   }
 
+  // const uaInfo = useCallback(() => {
+  //   return navigator.userAgent
+  // }, []);
+
   useEffect(() => {
     document.body.style = `font-family: ${currentFont || ''}`
   }, [currentFont])
 
   return (
     <>
+      <div>
+        <Affix offsetTop={10}>
+          <div>
+            <Alert message={<span><b>Note:</b> 字体选项仅在中当前操作系统中生效. 当前操作系统为 <b>{currentSystem}</b>.</span>} type="warning" />
+          </div>
+        </Affix>
+      </div>
       <div style={{ marginBottom: '10px' }}>
         <Radio.Group value={platform} onChange={handlePlatformChange}>
           <Radio.Button value={PLATFORM_DICT.MACOS}>{PLATFORM_DICT.MACOS}</Radio.Button>
@@ -92,4 +110,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
