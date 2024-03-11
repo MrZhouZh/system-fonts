@@ -10,7 +10,7 @@ const { Option } = Select;
 const PLATFORM_DICT = {
   MACOS: 'MacOS',
   WINDOWS: 'Windows',
-  COMBINATION: 'Combination',
+  COMBINATION: 'MacOS & Windows',
 }
 
 function App() {
