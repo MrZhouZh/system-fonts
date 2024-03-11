@@ -3,7 +3,6 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  font-size: 28px;
 }
 
 .logo {
@@ -40,4 +39,25 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.settings-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.select-addon {
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-inline-end: 0;
 }

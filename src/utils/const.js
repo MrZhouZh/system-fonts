@@ -1,3 +1,5 @@
+export const DEFAULT_FONT_SIZE = 14;
+
 export const MACOS_FONTS = [
   "\"Academy Engraved LET\"",
   "\"Adelle Sans Devanagari\"",

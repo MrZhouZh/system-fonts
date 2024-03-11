@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Affix, Alert, Radio, Select, message } from 'antd';
-import { COMBINATION_FONTS, MACOS_FONTS, WINDOWS_FONTS } from './utils/const'
+import { Affix, Alert, Radio, Select, Space, message } from 'antd';
+import { COMBINATION_FONTS, MACOS_FONTS, WINDOWS_FONTS, DEFAULT_FONT_SIZE } from './utils/const'
 import getSystem from './utils/getSystem';
 
 import './App.css'
+import { InputNumber } from 'antd';
 
 const { Option } = Select;
 
@@ -15,6 +16,7 @@ const PLATFORM_DICT = {
 
 function App() {
   const [currentFont, setCurrentFont] = useState('')
+  const [fontSize, setFontSize] = useState(DEFAULT_FONT_SIZE);
   const [platform, setPlatform] = useState(PLATFORM_DICT.MACOS);
 
   const currentSystem = getSystem().isMacOS
@@ -32,9 +34,9 @@ function App() {
     })
   }
 
-  // const uaInfo = useCallback(() => {
-  //   return navigator.userAgent
-  // }, []);
+  const uaInfo = useCallback(() => {
+    return navigator.userAgent
+  }, []);
 
   const fontList = useCallback(() => {
     return platform === PLATFORM_DICT.MACOS
@@ -57,29 +59,34 @@ function App() {
           </div>
         </Affix>
       </div>
-      <div style={{ marginBottom: '10px' }}>
+      <div style={{ margin: '10px 0' }}>
         <Radio.Group value={platform} onChange={handlePlatformChange}>
           <Radio.Button value={PLATFORM_DICT.MACOS}>{PLATFORM_DICT.MACOS}</Radio.Button>
           <Radio.Button value={PLATFORM_DICT.WINDOWS}>{PLATFORM_DICT.WINDOWS}</Radio.Button>
           <Radio.Button value={PLATFORM_DICT.COMBINATION}>{PLATFORM_DICT.COMBINATION}</Radio.Button>
         </Radio.Group>
       </div>
-      <div>
-        <Select
-          style={{ minWidth: `240px` }}
-          showSearch
-          value={currentFont}
-          onChange={(value) => {
-            setCurrentFont(value);
-          }}
-          allowClear
-        >
-          {fontList().map((font) => (
-            <Option key={font} style={{ fontFamily: font }}>{font}</Option>
-          ))}
-        </Select>
+      <div className='settings-wrapper'>
+        <Space.Compact>
+          <div className='select-addon'>字体</div>
+          <Select
+            style={{ minWidth: `240px` }}
+            showSearch
+            value={currentFont}
+            onChange={(value) => {
+              setCurrentFont(value);
+            }}
+            allowClear
+          >
+            {fontList().map((font) => (
+              <Option key={font} style={{ fontFamily: font }}>{font}</Option>
+            ))}
+          </Select>
+        </Space.Compact>
+        <InputNumber addonBefore="字号" addonAfter="px" min={10} value={fontSize} onChange={(value) => setFontSize(value)} />
       </div>
-      <div className="card">
+      <div className="card" style={{ fontSize: `${fontSize}px` }}>
+        <h1>System fonts</h1>
         <p>
           body
           font-family
@@ -115,6 +122,9 @@ function App() {
 
           売流断確託法約閣林並視工点映専私。朗込匹反費変弘向資段土見本家全合。代仙申野口陸工舎春講一村作提発優記議原。文社荒席女工健勢圧提分変縄融証意白人振。民経式技佐展視特同公村刊稚印国来。過元世世情張牧西祥人拡覇方安旅続区要帯標。景求題実参済青細書生活向無方忘。師本誘社筑元起載散裁庭真素点局歩事亡。abcdefghijklmnopqrstuvwxyz
         </p>
+      </div>
+      <div>
+        {uaInfo()}
       </div>
     </>
   )
