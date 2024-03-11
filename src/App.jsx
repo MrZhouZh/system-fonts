@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Affix, Alert, Radio, Select, message } from 'antd';
-import { MACOS_FONTS, WINDOWS_FONTS } from './utils/const'
+import { COMBINATION_FONTS, MACOS_FONTS, WINDOWS_FONTS } from './utils/const'
 import getSystem from './utils/getSystem';
 
 import './App.css'
@@ -10,6 +10,7 @@ const { Option } = Select;
 const PLATFORM_DICT = {
   MACOS: 'MacOS',
   WINDOWS: 'Windows',
+  COMBINATION: 'Combination',
 }
 
 function App() {
@@ -35,6 +36,14 @@ function App() {
   //   return navigator.userAgent
   // }, []);
 
+  const fontList = useCallback(() => {
+    return platform === PLATFORM_DICT.MACOS
+      ? MACOS_FONTS
+      : platform === PLATFORM_DICT.WINDOWS
+        ? WINDOWS_FONTS
+        : COMBINATION_FONTS
+  }, [platform])
+
   useEffect(() => {
     document.body.style = `font-family: ${currentFont || ''}`
   }, [currentFont])
@@ -52,6 +61,7 @@ function App() {
         <Radio.Group value={platform} onChange={handlePlatformChange}>
           <Radio.Button value={PLATFORM_DICT.MACOS}>{PLATFORM_DICT.MACOS}</Radio.Button>
           <Radio.Button value={PLATFORM_DICT.WINDOWS}>{PLATFORM_DICT.WINDOWS}</Radio.Button>
+          <Radio.Button value={PLATFORM_DICT.COMBINATION}>{PLATFORM_DICT.COMBINATION}</Radio.Button>
         </Radio.Group>
       </div>
       <div>
@@ -64,7 +74,7 @@ function App() {
           }}
           allowClear
         >
-          {(platform === PLATFORM_DICT.MACOS ? MACOS_FONTS : WINDOWS_FONTS).map((font) => (
+          {fontList().map((font) => (
             <Option key={font} style={{ fontFamily: font }}>{font}</Option>
           ))}
         </Select>

@@ -516,3 +516,20 @@ export const WINDOWS_FONTS = [
   "隶书",
   "黑体"
 ]
+
+export const COMBINATION_FONTS = [
+  '"PingFang SC", 微软雅黑',
+  'STSong, 华文中宋',
+  '"Kaiti SC", 楷体',
+  '"Baoli SC", 隶书',
+  '"Songti SC", 宋体',
+  'SimSong, 新宋体',
+  '"Yuanti SC", 幼圆',
+  '"Yuppy SC", 方正姚体',
+  // FZShutiAndHanziPenSC = '"HanziPen SC", 方正舒体',
+  'STHeiti, 黑体',
+  '"Libian SC", 华文新魏',
+  'Arial, 等线',
+  '"Lantinghei SC", 华文细黑',
+  'STKaiti, 华文楷体',
+]
